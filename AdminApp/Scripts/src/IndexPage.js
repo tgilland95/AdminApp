@@ -15,7 +15,7 @@ let deptNameLookup
 let repos
 let depts
 let initialCmt
-
+let adminStatus
 export async function run(hWebUrl, aWebUrl) {
   // initializes DataAccess object with hostweb and appweb URLs
   dao.init(hWebUrl, aWebUrl);
@@ -24,8 +24,12 @@ export async function run(hWebUrl, aWebUrl) {
   appWebUrl = aWebUrl;
   // stores user
   user = await util.getUserName();
-  if (user != "Steve Curtis" && user != "Howard Loos") {
-    return
+  if (user) {
+    adminStatus = await dao.searchUserInAdminList(user)
+    if (!adminStatus.d.results.length) {
+      console.log("not admin!")
+      return
+    }
   }
   let deptInfo = await util.getDeptInfo()
   deptNameLookup = {}
@@ -1081,7 +1085,8 @@ async function populateAddRecordTab() {
 
     addRecord(dept, code, recType, recFunc, recCat, userMsg, commentsPlan, archival, vital, highlyConfidential, recRepo)
 
-    size++ if (id == -1) {
+    size++;
+    if (id == -1) {
       addSize(dept, size.toString())
     } else {
       updateSize(id, size.toString())

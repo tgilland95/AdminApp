@@ -7,7 +7,6 @@ C:\Users\steve\Desktop\Work\AdminApp\AdminApp\obj\Debug\AdminApp.csprojResolveAs
 C:\Users\steve\Desktop\Work\AdminApp\AdminApp\obj\Debug\AdminApp.dll
 C:\Users\steve\Desktop\Work\AdminApp\AdminApp\obj\Debug\AdminApp.pdb
 C:\Users\tyler\source\repos\AdminApp\AdminApp\bin\Debug\AdminApp.pdb
-C:\Users\tyler\source\repos\AdminApp\AdminApp\obj\Debug\AdminApp.csprojResolveAssemblyReference.cache
 C:\Users\tyler\source\repos\AdminApp\AdminApp\obj\Debug\AdminApp.csproj.CoreCompileInputs.cache
 C:\Users\tyler\source\repos\AdminApp\AdminApp\obj\Debug\AdminApp.dll
 C:\Users\tyler\source\repos\AdminApp\AdminApp\obj\Debug\AdminApp.pdb

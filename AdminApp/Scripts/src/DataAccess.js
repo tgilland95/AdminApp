@@ -19,7 +19,7 @@ export function getCurrentUser() {
 export function getDeptInfo() {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information'" +
-        ")/items?@target='" + hostWebUrl + "'&$select=*",
+        ")/items?$top=1000&@target='" + hostWebUrl + "'&$select=*",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -29,8 +29,8 @@ export function getDeptInfo() {
 
 export function getRepos() {
   return $.ajax({
-    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Repositories')/items?@t" +
-        "arget='" + hostWebUrl + "'&$select=Repository",
+    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Repositories')/items?$t" +
+        "op=1000&@target='" + hostWebUrl + "'&$select=Repository",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -41,7 +41,7 @@ export function getRepos() {
 export function getDepts() {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness" +
-        "')/items?@target='" + hostWebUrl + "'&$select=Department_x0020_Number",
+        "')/items?$top=1000&@target='" + hostWebUrl + "'&$select=Department_x0020_Number",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -52,7 +52,7 @@ export function getDepts() {
 export function getGeneralRetention() {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Retention Sched" +
-        "ule')/items?@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Category",
+        "ule')/items?$top=1000&@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Category",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -85,7 +85,7 @@ export function getRecordsByDept(dept) {
 export function getRecordsByCat(cat) {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Category_x0020_ID eq '" + cat + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+        "hedule')/items$top=1000&?@target='" + hostWebUrl + "'&$filter=Record_x0020_Category_x0020_ID eq '" + cat + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -97,7 +97,7 @@ export function getRecordsByType(type, flag) {
   if (flag) {
     return $.ajax({
       url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-          "hedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Type eq '" + type + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+          "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Record_x0020_Type eq '" + type + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
       method: "GET",
       headers: {
         "Accept": "application/json; odata=verbose"
@@ -118,7 +118,7 @@ export function getRecordsByType(type, flag) {
 export function getUserDepartments(userName) {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information'" +
-        ")/items?@target='" + hostWebUrl + "'&$filter=Person_x0020_Responsible_x0020_f eq '" + userName + "'",
+        ")/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Person_x0020_Responsible_x0020_f eq '" + userName + "'",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -140,7 +140,7 @@ export function getDRSCompleteness() {
 export function getCommonRecords() {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Common Records')/items?" +
-        "@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Type",
+        "$top=1000&@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Type",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -152,7 +152,7 @@ export function getDeptRecords(dept) {
   if (dept == -1) {
     return $.ajax({
       url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-          "hedule')/items?@target='" + hostWebUrl + "'",
+          "hedule')/items?$top=1000&@target='" + hostWebUrl + "'",
       method: "GET",
       headers: {
         "Accept": "application/json; odata=verbose"
@@ -161,7 +161,7 @@ export function getDeptRecords(dept) {
   }
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
+        "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -427,6 +427,17 @@ export function addRecord(dept, code, recType, recFunc, recCat, userMsg, comment
       setTimeout(function () {
         $('#add-alert').empty()
       }, 2500)
+    }
+  })
+
+}
+let ADMIN_LIST_NAME = 'Transfer Request Administrators'
+export function searchUserInAdminList(userName) {
+  return $.ajax({
+    url: `../_api/SP.AppContextSite(@target)/web/lists/getbytitle('${ADMIN_LIST_NAME}')/items?$filter=Title eq '${userName}'&@target='${hostWebUrl}'`,
+    method: "GET",
+    headers: {
+      Accept: "application/json; odata=verbose"
     }
   })
 }

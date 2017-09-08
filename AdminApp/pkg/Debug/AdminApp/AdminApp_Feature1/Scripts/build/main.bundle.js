@@ -8878,36 +8878,49 @@
 	          case 5:
 	            user = _context.sent;
 	
-	            if (!(user != "Steve Curtis" && user != "Howard Loos")) {
-	              _context.next = 8;
+	            if (!user) {
+	              _context.next = 13;
 	              break;
 	            }
 	
+	            _context.next = 9;
+	            return dao.searchUserInAdminList(user);
+	
+	          case 9:
+	            adminStatus = _context.sent;
+	
+	            if (adminStatus.d.results.length) {
+	              _context.next = 13;
+	              break;
+	            }
+	
+	            console.log("not admin!");
 	            return _context.abrupt('return');
 	
-	          case 8:
-	            _context.next = 10;
+	          case 13:
+	            _context.next = 15;
 	            return util.getDeptInfo();
 	
-	          case 10:
+	          case 15:
 	            deptInfo = _context.sent;
 	
 	            deptNameLookup = {};
 	            for (i = 0; i < deptInfo.length; i++) {
 	              deptNameLookup[deptInfo[i]['Department_x0020_Number']] = deptInfo[i]['Department_x0020_Name'];
 	            }
-	            _context.next = 15;
+	            _context.next = 20;
 	            return util.getRecordsByDept(-1);
 	
-	          case 15:
+	          case 20:
 	            recordsList = _context.sent;
-	            _context.next = 18;
+	            _context.next = 23;
 	            return util.getGeneralRetention();
 	
-	          case 18:
+	          case 23:
 	            genRetention = _context.sent;
 	
-	            // populates catIDLookup object to get categories from category IDs and vice versa
+	            // populates catIDLookup object to get categories from category IDs and vice
+	            // versa
 	            catIDLookup = {};
 	            retentionLookup = {};
 	            newFunctionLookup = {};
@@ -8926,21 +8939,21 @@
 	              newFunctionLookup[genRetention[i]['Function']] = newTempList;
 	            }
 	
-	            _context.next = 25;
+	            _context.next = 30;
 	            return getRepos();
 	
-	          case 25:
+	          case 30:
 	            repos = _context.sent;
-	            _context.next = 28;
+	            _context.next = 33;
 	            return getDepts();
 	
-	          case 28:
+	          case 33:
 	            depts = _context.sent;
 	
 	
 	            populateAdminTabs();
 	
-	          case 30:
+	          case 35:
 	          case 'end':
 	            return _context.stop();
 	        }
@@ -9013,7 +9026,7 @@
 	              break;
 	            }
 	
-	            $('#report-table').html('</br><div class="alert alert-info" role="alert">No records returned from the query</div>');
+	            $('#report-table').html('</br><div class="alert alert-info" role="alert">No records returned from the que' + 'ry</div>');
 	            return _context3.abrupt('return');
 	
 	          case 6:
@@ -9118,7 +9131,7 @@
 	            userMsg = pendingList[i]['Message_x0020_From_x0020_Admin'];
 	
 	
-	            if (recCatID == null) {
+	            if (recCatID == null || recCatID == 'common') {
 	              recCatID = '';
 	              recCat = '';
 	            }
@@ -9142,15 +9155,15 @@
 	            tableRows += '<tr id="row' + (i + 1) + '"><td class="singleLine">' + dept + '</td>';
 	            tableRows += '<td class="singleLine">' + deptName + '</td>';
 	            tableRows += '<td class="singleLine" style="display:none">' + code + '</td>';
-	            tableRows += '<td class="singleLine" id="rtype">' + recType + '</td>';
-	            tableRows += '<td class="singleLine">' + func + '</td>';
-	            tableRows += '<td class="singleLine">' + recCatID + '</td>';
-	            tableRows += '<td class="singleLine">' + recCat + '</td>';
+	            tableRows += '<td id="rtype">' + recType + '</td>';
+	            tableRows += '<td>' + func + '</td>';
+	            tableRows += '<td>' + recCatID + '</td>';
+	            tableRows += '<td>' + recCat + '</td>';
 	            tableRows += '<td>' + retention + '</td>';
 	            tableRows += '<td>' + exception + '</td>';
 	            tableRows += '<td >' + adminMsg + '</td>';
 	            tableRows += '<td>' + userMsg + '</td>';
-	            tableRows += '<td><button type="button" class="btn-xs btn-primary viewDetailsButton">View Details</button></td>';
+	            tableRows += '<td><button type="button" class="btn-xs btn-primary viewDetailsButton">View Deta' + 'ils</button></td>';
 	            tableRows += '<td style="text-align:center"><input type="checkbox" value="" id="approveChbx' + (i + 1) + '"></td></tr>';
 	            chkList.push('#approveChbx' + (i + 1));
 	            rowNumList.push(i + 1);
@@ -9177,86 +9190,86 @@
 	              }
 	            });
 	
-	            tempStr = '</br><div style="overflow-x:scroll" width="1500px"><table class="table table-striped" id="pendingTable" style="width:100%"><thead><tr><th>Dept #</th><th>Dept Name</th>';
+	            tempStr = '</br><div style="overflow-x:scroll; width:120em" ><table class="table table-stri' + 'ped" id="pendingTable" style="width:100%"><thead><tr><th>Dept #</th><th>Dept Nam' + 'e</th>';
 	
-	            tempStr += '<th style="display:none">Code</th><th>Record Type</th><th>Function</th><th>Category ID</th><th>Record Category</th><th style="width:15em">Retention</th>';
-	            tempStr += '<th>Exception</th><th style="width:12em">Msg From User</th>';
-	            tempStr += '<th style="width:12em">Msg To User</th><th></th><th>Approve</th></tr></thead><tbody>' + tableRows + '</tbody></table></br></div>';
+	            tempStr += '<th style="display:none">Code</th><th style="width:20em">Record Type</th><th>Fun' + 'ction</th><th>Category ID</th><th>Record Category</th><th style="width:20em">Ret' + 'ention</th>';
+	            tempStr += '<th style="10em">Exception</th><th style="width:15em">Msg From User</th>';
+	            tempStr += '<th style="width:15em">Msg To User</th><th></th><th>Approve</th></tr></thead><tb' + 'ody>' + tableRows + '</tbody></table></br></div>';
 	
 	            $('#approve-tab').html(tempStr);
 	
 	            $('#approve-tab').append('<div id="approve-alert"></div>');
-	            $('#approve-tab').append('</br><button type="button" class="btn btn-primary" id="approveButton" disabled>Approve</button>');
+	            $('#approve-tab').append('</br><button type="button" class="btn btn-primary" id="approveButton" disabled>A' + 'pprove</button>');
 	            $('#approve-tab').append('<div id="myModal" class="modal fade" role="dialog"> \
-	                              <div class="modal-dialog"> \
-	                                <div class="modal-content"> \
+	                          ' + '    <div class="modal-dialog"> \
+	                                <div class="mod' + 'al-content"> \
 	                                  <div class="modal-header"> \
-	                                    <h4 class="modal-title">View Details</h4> \
-	                                  </div> \
-	                                  <div class="modal-body"> \
-	                                    <form class="form-horizontal"> \
+	  ' + '                                  <h4 class="modal-title">View Details</h4> \
+	  ' + '                                </div> \
+	                                  <div ' + 'class="modal-body"> \
+	                                    <form class="form-hori' + 'zontal"> \
 	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="r-dept">Dept: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <input type="text" class="form-control" id="r-dept"> \
+	    ' + '                                    <label class="control-label col-sm-3" for="r' + '-dept">Dept: </label> \
+	                                        <div class="col-' + 'sm-7"> \
+	                                          <input type="text" class="for' + 'm-control" id="r-dept"> \
 	                                        </div> \
-	                                      </div> \
-	                                      <div class="form-group" style="display:none"> \
-	                                        <label class="control-label col-sm-3" for="r-code">Code: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <input type="text" class="form-control" id="r-code" disabled> \
+	     ' + '                                 </div> \
+	                                      ' + '<div class="form-group" style="display:none"> \
+	                                ' + '        <label class="control-label col-sm-3" for="r-code">Code: </label> \
+	    ' + '                                    <div class="col-sm-7"> \
+	                   ' + '                       <input type="text" class="form-control" id="r-code" disab' + 'led> \
 	                                        </div> \
+	                        ' + '              </div> \
+	                                      <div class="form-gr' + 'oup"> \
+	                                        <label class="control-label col-' + 'sm-3" for="r-type">Record Type: </label> \
+	                                     ' + '   <div class="col-sm-7"> \
+	                                          <input typ' + 'e="text" class="form-control" id="r-type"> \
+	                                   ' + '     </div> \
 	                                      </div> \
+	                   ' + '                   <div class="form-group"> \
+	                                  ' + '      <label class="control-label col-sm-3" for="r-func">Function: </label> \
+	  ' + '                                      <div class="col-sm-7"> \
+	                 ' + '                         <select class="form-control" id="r-func"></select> \
+	  ' + '                                      </div> \
+	                                 ' + '     </div> \
 	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="r-type">Record Type: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <input type="text" class="form-control" id="r-type"> \
-	                                        </div> \
+	 ' + '                                       <label class="control-label col-sm-3" for' + '="r-cat">Record Category: </label> \
+	                                        <di' + 'v class="col-sm-7"> \
+	                                          <select class="f' + 'orm-control" id="r-cat" disabled></select> \
+	                                   ' + '     </div> \
 	                                      </div> \
-	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="r-func">Function: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <select class="form-control" id="r-func"></select> \
+	                   ' + '                   <div class="form-group"> \
+	                                  ' + '      <label class="control-label col-sm-3" for="r-ret">Retention: </label> \
+	  ' + '                                      <div class="col-sm-7"> \
+	                 ' + '                         <textarea style="resize:none" class="form-control" id="' + 'r-ret" disabled></textarea> \
 	                                        </div> \
-	                                      </div> \
-	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="r-cat">Record Category: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <select class="form-control" id="r-cat" disabled></select> \
+	 ' + '                                     </div> \
+	                                  ' + '    <div class="form-group"> \
+	                                        <label cl' + 'ass="control-label col-sm-3" for="r-exc">Exception: </label> \
+	                 ' + '                       <div class="col-sm-7"> \
+	                                ' + '          <textarea style="resize:none" class="form-control" id="r-exc"></textar' + 'ea> \
 	                                        </div> \
-	                                      </div> \
-	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="r-ret">Retention: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <textarea style="resize:none" class="form-control" id="r-ret" disabled></textarea> \
+	                         ' + '             </div> \
+	                                      <div class="form-gro' + 'up"> \
+	                                        <label class="control-label col-s' + 'm-3" for="user-cmts">Msg From User: </label> \
+	                                 ' + '       <div class="col-sm-7"> \
+	                                          <texta' + 'rea style="resize:none" class="form-control" id="user-cmts" disabled></textarea>' + ' \
 	                                        </div> \
-	                                      </div> \
-	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="r-exc">Exception: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <textarea style="resize:none" class="form-control" id="r-exc"></textarea> \
-	                                        </div> \
-	                                      </div> \
-	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="user-cmts">Msg To User: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <textarea style="resize:none" class="form-control" id="user-cmts" disabled></textarea> \
-	                                        </div> \
-	                                      </div> \
-	                                      <div class="form-group"> \
-	                                        <label class="control-label col-sm-3" for="admin-cmts">Msg From User: </label> \
-	                                        <div class="col-sm-7"> \
-	                                          <textarea style="resize:none" class="form-control" id="admin-cmts"></textarea> \
-	                                        </div> \
-	                                      </div> \
+	                            ' + '          </div> \
+	                                      <div class="form-group"' + '> \
+	                                        <label class="control-label col-sm-3' + '" for="admin-cmts">Msg To User: </label> \
+	                                     ' + '   <div class="col-sm-7"> \
+	                                          <textarea ' + 'style="resize:none" class="form-control" id="admin-cmts"></textarea> \
+	         ' + '                               </div> \
+	                                      </' + 'div> \
 	                                    </form> \
-	                                  </div> \
+	                           ' + '       </div> \
 	                                  <div class="modal-footer"> \
-	                                    <button type="button" class="btn btn-default" id="saveRecord">Save</button> \
-	                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> \
-	                                  </div> \
+	 ' + '                                   <button type="button" class="btn btn-default"' + ' id="saveRecord">Save</button> \
+	                                    <button typ' + 'e="button" class="btn btn-default" data-dismiss="modal">Close</button> \
+	       ' + '                           </div> \
 	                                </div> \
-	                              </div> \
+	   ' + '                           </div> \
 	                            </div>');
 	
 	            $('#r-cat').on('change', function () {
@@ -9471,82 +9484,82 @@
 	            }
 	
 	            $('#add-fields').append('</br></br><form class="form-horizontal"> \
-	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="rec-dept">Department: <span id="red-ast">*</span></label> \
-	                                  <div class="col-sm-8"> \
-	                                    <select class="form-control" id="rec-dept"> \
-	                                    ' + deptOptions + ' \
+	                                <div ' + 'class="form-group"> \
+	                                  <label class="control-la' + 'bel col-sm-2" for="rec-dept">Department: <span id="red-ast">*</span></label> \
+	 ' + '                                 <div class="col-sm-8"> \
+	                      ' + '              <select class="form-control" id="rec-dept"> \
+	                    ' + '                ' + deptOptions + ' \
 	                                    </select> \
-	                                  </div> \
+	                             ' + '     </div> \
 	                                </div> \
-	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="rec-type">Record Type: <span id="red-ast">*</span></label> \
+	                         ' + '       <div class="form-group"> \
+	                                  <label class' + '="control-label col-sm-2" for="rec-type">Record Type: <span id="red-ast">*</span' + '></label> \
 	                                  <div class="col-sm-8"> \
-	                                    <input type="text" class="form-control" id="rec-type" placeholder="Enter record type"> \
+	         ' + '                           <input type="text" class="form-control" id="rec-type"' + ' placeholder="Enter record type"> \
 	                                  </div> \
-	                                </div> \
-	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="rec-func">Function: <span id="red-ast">*</span></label> \
-	                                  <div class="col-sm-8"> \
-	                                    <select class="form-control" id="rec-func"> \
-	                                    ' + options + ' \
+	 ' + '                               </div> \
+	                                <div cla' + 'ss="form-group"> \
+	                                  <label class="control-label' + ' col-sm-2" for="rec-func">Function: <span id="red-ast">*</span></label> \
+	      ' + '                            <div class="col-sm-8"> \
+	                           ' + '         <select class="form-control" id="rec-func"> \
+	                         ' + '           ' + options + ' \
 	                                    </select> \
-	                                  </div> \
+	                             ' + '     </div> \
 	                                </div> \
-	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="rec-cat">Category: <span id="red-ast">*</span></label> \
+	                         ' + '       <div class="form-group"> \
+	                                  <label class' + '="control-label col-sm-2" for="rec-cat">Category: <span id="red-ast">*</span></l' + 'abel> \
 	                                  <div class="col-sm-8"> \
-	                                    <select class="form-control" id="rec-cat" disabled> \
-	                                    </select> \
-	                                  </div> \
+	             ' + '                       <select class="form-control" id="rec-cat" disabled> \
+	   ' + '                                 </select> \
+	                                  <' + '/div> \
 	                                </div> \
-	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="retention">Retention:</label> \
-	                                  <div class="col-sm-8"> \
-	                                    <textarea class="form-control" id="retention" rows="2" style="resize:none" disabled></textarea> \
+	                               ' + ' <div class="form-group"> \
+	                                  <label class="cont' + 'rol-label col-sm-2" for="retention">Retention:</label> \
+	                       ' + '           <div class="col-sm-8"> \
+	                                    <textare' + 'a class="form-control" id="retention" rows="2" style="resize:none" disabled></te' + 'xtarea> \
 	                                  </div> \
-	                                </div> \
+	                           ' + '     </div> \
 	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="msgToUser">Message to User:</label> \
-	                                  <div class="col-sm-8"> \
-	                                    <textarea class="form-control" id="msgToUser" rows="3" style="resize:none" placeholder="Type your message"></textarea> \
+	       ' + '                           <label class="control-label col-sm-2" for="msgToUser"' + '>Message to User:</label> \
+	                                  <div class="col-sm' + '-8"> \
+	                                    <textarea class="form-control" id="ms' + 'gToUser" rows="3" style="resize:none" placeholder="Type your message"></textarea' + '> \
 	                                  </div> \
-	                                </div> \
+	                                <' + '/div> \
 	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="commentsPlan">Comments / Plan:</label> \
-	                                  <div class="col-sm-8"> \
-	                                    <textarea class="form-control" id="commentsPlan" rows="3" style="resize:none" placeholder="Type your comment"></textarea> \
+	             ' + '                     <label class="control-label col-sm-2" for="commentsPlan">Co' + 'mments / Plan:</label> \
+	                                  <div class="col-sm-8"' + '> \
+	                                    <textarea class="form-control" id="comme' + 'ntsPlan" rows="3" style="resize:none" placeholder="Type your comment"></textarea' + '> \
 	                                  </div> \
-	                                </div> \
+	                                <' + '/div> \
 	                                <div class="form-group"> \
-	                                  <label class="control-label col-sm-2" for="rec-repo">Repository: <span id="red-ast">*</span></label> \
-	                                  <div class="col-sm-8"> \
-	                                    <select class="form-control" id="rec-repo"> \
+	             ' + '                     <label class="control-label col-sm-2" for="rec-repo">Reposi' + 'tory: <span id="red-ast">*</span></label> \
+	                                  <d' + 'iv class="col-sm-8"> \
+	                                    <select class="form-c' + 'ontrol" id="rec-repo"> \
 	                                    ' + repoOptions + ' \
 	                                    </select> \
+	                             ' + '     </div> \
+	                                </div> \
+	                         ' + '       <div class="form-group"> \
+	                                  <div style="' + 'padding-left: 15em"> \
+	                                    <label><input type="c' + 'heckbox" value="" id="archival-chkbx"> Archival</label> \
+	                      ' + '            </div> \
+	                                </div> \
+	                  ' + '              <div class="form-group"> \
+	                                  <div ' + 'style="padding-left: 15em"> \
+	                                    <label><input ' + 'type="checkbox" value="" id="vital-chkbx"> Vital</label> \
+	                     ' + '             </div> \
+	                                </div> \
+	                 ' + '               <div class="form-group"> \
+	                                  <div' + ' style="padding-left: 15em"> \
+	                                    <label><input' + ' type="checkbox" value="" id="confidential-chkbx"> Highly Confidential</label> ' + '\
 	                                  </div> \
-	                                </div> \
+	                                </d' + 'iv> \
 	                                <div class="form-group"> \
-	                                  <div style="padding-left: 15em"> \
-	                                    <label><input type="checkbox" value="" id="archival-chkbx"> Archival</label> \
-	                                  </div> \
-	                                </div> \
-	                                <div class="form-group"> \
-	                                  <div style="padding-left: 15em"> \
-	                                    <label><input type="checkbox" value="" id="vital-chkbx"> Vital</label> \
-	                                  </div> \
-	                                </div> \
-	                                <div class="form-group"> \
-	                                  <div style="padding-left: 15em"> \
-	                                    <label><input type="checkbox" value="" id="confidential-chkbx"> Highly Confidential</label> \
-	                                  </div> \
-	                                </div> \
-	                                <div class="form-group"> \
-	                                  <div style="padding-left: 8em"><span display="inline-block" id="red-ast">*</span> means required field</div> \
-	                                </div> \
+	               ' + '                   <div style="padding-left: 8em"><span display="inline-block" i' + 'd="red-ast">*</span> means required field</div> \
+	                              ' + '  </div> \
 	                              </form>');
 	
-	            $('#add-buttons').append('<div align="center"><button type="button" class="btn btn-primary" id="add-submit">Submit</button></br></br></br></div>');
+	            $('#add-buttons').append('<div align="center"><button type="button" class="btn btn-primary" id="add-submit' + '">Submit</button></br></br></br></div>');
 	
 	            $('#rec-func').change(function () {
 	              $('#retention').val('');
@@ -9575,7 +9588,7 @@
 	            $('#add-submit').click(function () {
 	              $('#add-alert').empty();
 	              if ($('#rec-dept option:selected').val() == 'Select a department' || $('#rec-type').val() == '' || $('#rec-func option:selected').val() == 'Select a function' || $('#rec-cat option:selected').val() == 'Select a category' || $('#rec-repo option:selected').val() == 'Select a repository') {
-	                $('#add-alert').html('</br><div class="alert alert-warning" role="alert">Department, Record Type, Function, Record Category, and Repository cannot be left blank.</div>');
+	                $('#add-alert').html('</br><div class="alert alert-warning" role="alert">Department, Record Type, Func' + 'tion, Record Category, and Repository cannot be left blank.</div>');
 	                setTimeout(function () {
 	                  $('#add-alert').empty();
 	                }, 4000);
@@ -9851,6 +9864,8 @@
 	var repos = void 0;
 	var depts = void 0;
 	var initialCmt = void 0;
+	var adminStatus = void 0;
+	
 	
 	function populateAdminTabs() {
 	
@@ -9892,52 +9907,52 @@
 	  }
 	
 	  $('#report-tab').append('</br></br><form class="form-horizontal"> \
-	                              <div class="form-group"> \
-	                                <label class="control-label col-sm-2" for="dept-select">Filter by Department:</label> \
-	                                <div class="col-sm-5"> \
-	                                  <select class="form-control" id="dept-select"> \
+	                              <div cl' + 'ass="form-group"> \
+	                                <label class="control-label ' + 'col-sm-2" for="dept-select">Filter by Department:</label> \
+	                    ' + '            <div class="col-sm-5"> \
+	                                  <select c' + 'lass="form-control" id="dept-select"> \
 	                                    ' + deptOptions + ' \
 	                                  </select> \
-	                                </div> \
+	                               ' + ' </div> \
 	                                <div class="col-sm-5"> \
-	                                  <button type="button" id="dept-submit" class="btn btn-default">Submit</button> \
+	             ' + '                     <button type="button" id="dept-submit" class="btn btn-defau' + 'lt">Submit</button> \
 	                                </div> \
-	                              </div> \
+	                 ' + '             </div> \
 	                              <div class="form-group"> \
-	                                <label class="control-label col-sm-2" for="cat-select">Filter by Category:</label> \
-	                                <div class="col-sm-5"> \
-	                                  <select class="form-control" id="cat-select"> \
+	 ' + '                               <label class="control-label col-sm-2" for="cat-se' + 'lect">Filter by Category:</label> \
+	                                <div class="' + 'col-sm-5"> \
+	                                  <select class="form-control" id="' + 'cat-select"> \
 	                                    ' + catOptions + ' \
 	                                  </select> \
-	                                </div> \
+	                               ' + ' </div> \
 	                                <div class="col-sm-5"> \
-	                                  <button type="button" id="cat-submit" class="btn btn-default">Submit</button> \
+	             ' + '                     <button type="button" id="cat-submit" class="btn btn-defaul' + 't">Submit</button> \
 	                                </div> \
-	                              </div> \
+	                  ' + '            </div> \
 	                              <div class="form-group"> \
-	                                <label class="control-label col-sm-2" for="type-box">Filter by Record Type:</label> \
-	                                <div class="col-sm-5"> \
-	                                  <input type="text" class="form-control" id="type-select"> \
+	  ' + '                              <label class="control-label col-sm-2" for="type-bo' + 'x">Filter by Record Type:</label> \
+	                                <div class="' + 'col-sm-5"> \
+	                                  <input type="text" class="form-co' + 'ntrol" id="type-select"> \
 	                                </div> \
-	                                <div class="col-sm-5"> \
-	                                  <button type="button" id="type-submit" class="btn btn-default">Submit</button> \
-	                                </div> \
-	                                </br> \
+	            ' + '                    <div class="col-sm-5"> \
+	                                  <' + 'button type="button" id="type-submit" class="btn btn-default">Submit</button> \
+	' + '                                </div> \
+	                                </br> ' + '\
 	                                <div class="col-sm-6 checkbox"> \
-	                                  <center><label><input type="checkbox" id="exact-chbx"> Exact Match</label></center> \
+	            ' + '                      <center><label><input type="checkbox" id="exact-chbx"> Exa' + 'ct Match</label></center> \
 	                                </div> \
-	                              </div> \
-	                              <div class="form-group"> \
-	                                <label class="control-label col-sm-2" for="admin-buttons">DRS / Review:</label> \
-	                                <div class="col-sm-7"> \
+	           ' + '                   </div> \
+	                              <div class="form-group' + '"> \
+	                                <label class="control-label col-sm-2" for="' + 'admin-buttons">DRS / Review:</label> \
+	                                <div clas' + 's="col-sm-7"> \
 	                                  <div id="admin-buttons"> \
-	                                    <button type="button" id="drs-complete" class="btn btn-default">DRS Complete</button> \
-	                                    <button type="button" id="drs-not-complete" class="btn btn-default">DRS Not Complete</button> \
-	                                    <button type="button" id="review-complete" class="btn btn-default">Review Complete</button> \
-	                                    <button type="button" id="review-not-complete" class="btn btn-default">Review Not Complete</button> \
-	                                  </div> \
+	   ' + '                                 <button type="button" id="drs-complete" class="' + 'btn btn-default">DRS Complete</button> \
+	                                    <bu' + 'tton type="button" id="drs-not-complete" class="btn btn-default">DRS Not Complet' + 'e</button> \
+	                                    <button type="button" id="revie' + 'w-complete" class="btn btn-default">Review Complete</button> \
+	                 ' + '                   <button type="button" id="review-not-complete" class="btn btn' + '-default">Review Not Complete</button> \
+	                                  </div' + '> \
 	                                </div> \
-	                              </div> \
+	                              </div' + '> \
 	                            </form>');
 	  $('#report-tab').append('<div id="type-alert"></div>');
 	  $('#report-tab').append('<div id="report-table"></div>');
@@ -9962,7 +9977,7 @@
 	    $('#type-alert').html();
 	    $('#report-table').html();
 	    if ($('#type-select').val().length < 3) {
-	      $('#report-table').html('</br><div class="alert alert-info" role="alert">Query needs to contain at least 3 characters</div>');
+	      $('#report-table').html('</br><div class="alert alert-info" role="alert">Query needs to contain at least ' + '3 characters</div>');
 	      return;
 	    }
 	
@@ -10010,7 +10025,7 @@
 	  }
 	
 	  $('#report-table').html('</br>');
-	  var tempStr = '<table class="table table-striped"><thead><tr><th>Department</th><th>DRS Complete</th>';
+	  var tempStr = '<table class="table table-striped"><thead><tr><th>Department</th><th>DRS Complet' + 'e</th>';
 	  tempStr += '<th>Annual Review Complete</th></tr></thead><tbody>' + tableRows + '</tbody></table></br>';
 	  $('#report-table').append(tempStr);
 	  addDownloadButton();
@@ -10101,8 +10116,8 @@
 	
 	  $('#report-table').html('</br>');
 	
-	  var tempStr = '<div style="overflow-x:scroll" width="1500px"><table class="table table-striped" style="width:100%"><thead><tr><th>Dept #</th><th>Dept Name</th>';
-	  tempStr += '<th>Record Type</th><th>Function</th><th>Category ID</th><th>Record Category</th><th style="width:15%">Retention</th>';
+	  var tempStr = '<div style="overflow-x:scroll" width="1500px"><table class="table table-striped"' + ' style="width:100%"><thead><tr><th>Dept #</th><th>Dept Name</th>';
+	  tempStr += '<th>Record Type</th><th>Function</th><th>Category ID</th><th>Record Category</th' + '><th style="width:15%">Retention</th>';
 	  tempStr += '<th style="width:10%">Exception</th><th style="width:10%">Msg From User</th>';
 	  tempStr += '<th style="width:10%">Msg To User</th><th>Status</th></tr></thead><tbody>' + tableRows + '</tbody></table></br></div></br>';
 	
@@ -10111,7 +10126,7 @@
 	}
 	
 	function addDownloadButton() {
-	  $('#report-table').append('<a id="download-btn" class="btn btn-primary" href="#" role="button" download="">Download</a>');
+	  $('#report-table').append('<a id="download-btn" class="btn btn-primary" href="#" role="button" download="">' + 'Download</a>');
 	  $('#report-table').append('</br></br>');
 	  $('#download-btn').click(function () {
 	    var csv = '';
@@ -10161,7 +10176,7 @@
 	exports.updateSize = updateSize;
 	exports.addSize = addSize;
 	exports.addRecord = addRecord;
-	
+	exports.searchUserInAdminList = searchUserInAdminList;
 	var hostWebUrl = '';
 	var appWebUrl = '';
 	
@@ -10174,124 +10189,156 @@
 	  return $.ajax({
 	    url: "../_api/web/currentuser?$select=Title",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getDeptInfo() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information')/items?@target='" + hostWebUrl + "'&$select=*",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information'" + ")/items?$top=1000&@target='" + hostWebUrl + "'&$select=*",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getRepos() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Repositories')/items?@target='" + hostWebUrl + "'&$select=Repository",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Repositories')/items?@t" + "arget='" + hostWebUrl + "'&$select=Repository",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getDepts() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness')/items?@target='" + hostWebUrl + "'&$select=Department_x0020_Number",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness" + "')/items?$top=1000&@target='" + hostWebUrl + "'&$select=Department_x0020_Number",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getGeneralRetention() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Retention Schedule')/items?@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Category",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Retention Sched" + "ule')/items?@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Category",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getPendingRecords() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'&$filter=Status eq 'Pending'&$orderby=Department_x0020_Number",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Status eq 'Pending'&$orderby=Department_x0020_Number",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getRecordsByDept(dept) {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getRecordsByCat(cat) {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Category_x0020_ID eq '" + cat + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Category_x0020_ID eq '" + cat + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getRecordsByType(type, flag) {
 	  if (flag) {
 	    return $.ajax({
-	      url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Type eq '" + type + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Type eq '" + type + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
 	      method: "GET",
-	      headers: { "Accept": "application/json; odata=verbose" }
+	      headers: {
+	        "Accept": "application/json; odata=verbose"
+	      }
 	    });
 	  } else {
 	    return $.ajax({
-	      url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'&$filter=substringof('" + type + "',Record_x0020_Type)&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=substringof('" + type + "',Record_x0020_Type)&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
 	      method: "GET",
-	      headers: { "Accept": "application/json; odata=verbose" }
+	      headers: {
+	        "Accept": "application/json; odata=verbose"
+	      }
 	    });
 	  }
 	}
 	
 	function getUserDepartments(userName) {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information')/items?@target='" + hostWebUrl + "'&$filter=Person_x0020_Responsible_x0020_f eq '" + userName + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information'" + ")/items?@target='" + hostWebUrl + "'&$filter=Person_x0020_Responsible_x0020_f eq '" + userName + "'",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getDRSCompleteness() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness')/items?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness" + "')/items?@target='" + hostWebUrl + "'",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getCommonRecords() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Common Records')/items?@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Common Records')/items?" + "@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Type",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function getDeptRecords(dept) {
 	  if (dept == -1) {
 	    return $.ajax({
-	      url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'",
 	      method: "GET",
-	      headers: { "Accept": "application/json; odata=verbose" }
+	      headers: {
+	        "Accept": "application/json; odata=verbose"
+	      }
 	    });
 	  }
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function updatePendingRecord(row, itemID, dept, func, recType, catID, cat, ret, exc, adminCmts, flag) {
 	  var data = {
-	    "__metadata": { "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem" },
+	    "__metadata": {
+	      "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem"
+	    },
 	    "Department_x0020_Number": dept,
 	    "Function": func,
 	    "Record_x0020_Type": recType,
@@ -10301,7 +10348,7 @@
 	    "New_x0020_Message": flag
 	  };
 	  $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10315,7 +10362,7 @@
 	      location.reload();
 	    },
 	    failure: function failure() {
-	      $('#approve-alert').html('</br><div class="alert alert-warning" role="alert">Server error. Please try again.</div>');
+	      $('#approve-alert').html('</br><div class="alert alert-warning" role="alert">Server error. Please try agai' + 'n.</div>');
 	    }
 	  });
 	}
@@ -10323,12 +10370,14 @@
 	function approveRecords(rows, ids) {
 	  var error = 0;
 	  var data = {
-	    "__metadata": { "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem" },
+	    "__metadata": {
+	      "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem"
+	    },
 	    "Status": "Approved"
 	  };
 	  for (var i = 0; i < ids.length; i++) {
 	    $.ajax({
-	      url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items(" + ids[i] + ")?@target='" + hostWebUrl + "'",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + ids[i] + ")?@target='" + hostWebUrl + "'",
 	      method: "POST",
 	      contentType: "application/json;odata=verbose",
 	      data: JSON.stringify(data),
@@ -10346,7 +10395,7 @@
 	      failure: function failure() {
 	        error = 1;
 	        if (i == ids.length - 1 && error == 1) {
-	          $('#approve-alert').html('</br><div class="alert alert-warning" role="alert">Server error. Please try again.</div>');
+	          $('#approve-alert').html('</br><div class="alert alert-warning" role="alert">Server error. Please try agai' + 'n.</div>');
 	        }
 	      }
 	    });
@@ -10357,7 +10406,9 @@
 	  var data;
 	  if (flag == 1) {
 	    data = {
-	      "__metadata": { "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem" },
+	      "__metadata": {
+	        "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem"
+	      },
 	      "Code": code,
 	      "Function": func,
 	      "Record_x0020_Type": type,
@@ -10367,7 +10418,9 @@
 	    };
 	  } else {
 	    data = {
-	      "__metadata": { "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem" },
+	      "__metadata": {
+	        "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem"
+	      },
 	      "Code": code,
 	      "Function": func,
 	      "Record_x0020_Type": type,
@@ -10377,7 +10430,7 @@
 	  }
 	
 	  $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10404,7 +10457,7 @@
 	
 	function deleteRecord(itemID, row) {
 	  $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    headers: {
 	      "X-RequestDigest": $("#__REQUESTDIGEST").val(),
@@ -10419,20 +10472,24 @@
 	
 	function getSizes() {
 	  return $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@t" + "arget='" + hostWebUrl + "'",
 	    method: "GET",
-	    headers: { "Accept": "application/json; odata=verbose" }
+	    headers: {
+	      "Accept": "application/json; odata=verbose"
+	    }
 	  });
 	}
 	
 	function updateSize(itemID, size) {
 	  var data = {
-	    "__metadata": { "type": "SP.Data.Unique_x0020_CodesListItem" },
+	    "__metadata": {
+	      "type": "SP.Data.Unique_x0020_CodesListItem"
+	    },
 	    "Unique_x0020_Code": size
 	  };
 	
 	  $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json; odata=verbose",
 	    data: JSON.stringify(data),
@@ -10450,12 +10507,14 @@
 	
 	function addSize(dept, size) {
 	  var data = {
-	    "__metadata": { "type": "SP.Data.Unique_x0020_CodesListItem" },
+	    "__metadata": {
+	      "type": "SP.Data.Unique_x0020_CodesListItem"
+	    },
 	    "Department_x0020_Number": dept,
 	    "Unique_x0020_Code": size
 	  };
 	  $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@t" + "arget='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10477,7 +10536,9 @@
 	    flag = 'No';
 	  }
 	  var data = {
-	    "__metadata": { "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem" },
+	    "__metadata": {
+	      "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem"
+	    },
 	    "Department_x0020_Number": dept,
 	    "Code": code,
 	    "Function": recFunc,
@@ -10493,7 +10554,7 @@
 	    "New_x0020_Message": flag
 	  };
 	  $.ajax({
-	    url: appWebUrl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Schedule')/items?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10517,10 +10578,20 @@
 	      }, 1500);
 	    },
 	    failure: function failure() {
-	      $('#add-alert').html('</br><div class="alert alert-warning" role="alert">Server error. Record not added.</div>');
+	      $('#add-alert').html('</br><div class="alert alert-warning" role="alert">Server error. Record not adde' + 'd.</div>');
 	      setTimeout(function () {
 	        $('#add-alert').empty();
 	      }, 2500);
+	    }
+	  });
+	}
+	var ADMIN_LIST_NAME = 'Transfer Request Administrators';
+	function searchUserInAdminList(userName) {
+	  return $.ajax({
+	    url: '../_api/SP.AppContextSite(@target)/web/lists/getbytitle(\'' + ADMIN_LIST_NAME + '\')/items?$filter=Title eq \'' + userName + '\'&@target=\'' + hostWebUrl + '\'',
+	    method: "GET",
+	    headers: {
+	      Accept: "application/json; odata=verbose"
 	    }
 	  });
 	}
@@ -10613,15 +10684,15 @@
 	            return _context3.abrupt("return", "None");
 	
 	          case 6:
-	            // goes through result list and parses all depts, then adds them to userDepts array
-	            // allows for multiple entries of the same person
+	            // goes through result list and parses all depts, then adds them to userDepts
+	            // array allows for multiple entries of the same person
 	            userDepts = [];
 	
 	            for (i = 0; i < results.length; i++) {
-	              deptString = results[i]['Department_x0020_Number'];
+	              deptString = results[i]["Department_x0020_Number"];
 	              // removes whitespace from string
 	
-	              deptString = deptString.replace(/\s/g, '');
+	              deptString = deptString.replace(/\s/g, "");
 	              // adds department to array
 	              userDepts.push(deptString);
 	            }
@@ -10669,7 +10740,7 @@
 	              break;
 	            }
 	
-	            return _context4.abrupt("return", 'None');
+	            return _context4.abrupt("return", "None");
 	
 	          case 6:
 	            return _context4.abrupt("return", genRetention);
@@ -10747,7 +10818,7 @@
 	              break;
 	            }
 	
-	            return _context6.abrupt("return", 'None');
+	            return _context6.abrupt("return", "None");
 	
 	          case 6:
 	            return _context6.abrupt("return", pendingRecords);
@@ -10773,7 +10844,7 @@
 	      while (1) {
 	        switch (_context7.prev = _context7.next) {
 	          case 0:
-	            if (!(field == 'dept')) {
+	            if (!(field == "dept")) {
 	              _context7.next = 10;
 	              break;
 	            }
@@ -10790,13 +10861,13 @@
 	              break;
 	            }
 	
-	            return _context7.abrupt("return", 'None');
+	            return _context7.abrupt("return", "None");
 	
 	          case 7:
 	            return _context7.abrupt("return", resultList);
 	
 	          case 10:
-	            if (!(field == 'cat')) {
+	            if (!(field == "cat")) {
 	              _context7.next = 20;
 	              break;
 	            }
@@ -10813,13 +10884,13 @@
 	              break;
 	            }
 	
-	            return _context7.abrupt("return", 'None');
+	            return _context7.abrupt("return", "None");
 	
 	          case 17:
 	            return _context7.abrupt("return", resultList);
 	
 	          case 20:
-	            if (!(field == 'type')) {
+	            if (!(field == "type")) {
 	              _context7.next = 28;
 	              break;
 	            }
@@ -10836,7 +10907,7 @@
 	              break;
 	            }
 	
-	            return _context7.abrupt("return", 'None');
+	            return _context7.abrupt("return", "None");
 	
 	          case 27:
 	            return _context7.abrupt("return", resultList);
@@ -11035,7 +11106,7 @@
 	              break;
 	            }
 	
-	            return _context14.abrupt("return", 'None');
+	            return _context14.abrupt("return", "None");
 	
 	          case 6:
 	            return _context14.abrupt("return", resultList);
