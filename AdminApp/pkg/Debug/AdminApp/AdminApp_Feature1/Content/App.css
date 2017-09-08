@@ -1,0 +1,14 @@
+﻿/* Place custom styles below */
+
+th, .singleLine {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#rtype {
+  font-weight: bold;
+}
+
+#red-ast {
+  color:red;
+}

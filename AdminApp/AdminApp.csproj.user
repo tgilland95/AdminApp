@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SharePointSiteUrl>https://urim-department.byu.edu/records_transfers/</SharePointSiteUrl>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{C1CDDADD-2546-481F-9697-4EA41081F2FC}">
+        <ProjectStore>
+          <AppInstanceId>e1ff5394-35fd-4f2e-bee9-8fbe88a7b4f3</AppInstanceId>
+          <AppInstancePackageModifiedTime>2017-09-08T19:16:07.4394455Z</AppInstancePackageModifiedTime>
+        </ProjectStore>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

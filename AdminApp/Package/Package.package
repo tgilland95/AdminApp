@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="648acbca-980d-4dd5-b0a9-d51d3d89f4dc" 
+        solutionId="648acbca-980d-4dd5-b0a9-d51d3d89f4dc" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="AdminApp"
+        sharePointProductVersion="15.0">
+  <features>
+        <featureReference itemId="42759437-3674-4787-ac66-e2b66bc25d25" />
+  </features>
+</package>
