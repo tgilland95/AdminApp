@@ -684,12 +684,11 @@ async function populateApproveTab() {
   })
 
   $('.viewDetailsButton').on('click', function () {
-    $('#r-cat').empty()
-    $('#r-func').empty()
-    $('#r-code').empty()
-    $('#r-type').empty()
-    $('#r-ret').empty()
+    // $('#r-cat').empty() $('#r-func').empty() $('#r-code').empty()
+    // $('#r-type').empty() $('#r-ret').empty()
     $('#r-cat').prop('disabled', 'disabled');
+    $('#r-func').prop('disabled', 'disabled');
+
     $('#ret-table-alert').empty()
 
     $('#myModal').modal('show');

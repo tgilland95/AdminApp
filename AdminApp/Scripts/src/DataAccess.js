@@ -63,7 +63,7 @@ export function getGeneralRetention() {
 export function getPendingRecords() {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items?@target='" + hostWebUrl + "'&$filter=Status eq 'Pending'&$orderby=Department_x0020_Number",
+        "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Status eq 'Pending'&$orderby=Department_x0020_Number",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -74,7 +74,7 @@ export function getPendingRecords() {
 export function getRecordsByDept(dept) {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
+        "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -106,7 +106,7 @@ export function getRecordsByType(type, flag) {
   } else {
     return $.ajax({
       url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-          "hedule')/items?@target='" + hostWebUrl + "'&$filter=substringof('" + type + "',Record_x0020_Type)&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+          "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=substringof('" + type + "',Record_x0020_Type)&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
       method: "GET",
       headers: {
         "Accept": "application/json; odata=verbose"
@@ -129,7 +129,7 @@ export function getUserDepartments(userName) {
 export function getDRSCompleteness() {
   return $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness" +
-        "')/items?@target='" + hostWebUrl + "'",
+        "')/items?$top=1000&@target='" + hostWebUrl + "'",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -184,7 +184,7 @@ export function updatePendingRecord(row, itemID, dept, func, recType, catID, cat
   }
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+        "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),
@@ -215,7 +215,7 @@ export function approveRecords(rows, ids) {
   for (var i = 0; i < ids.length; i++) {
     $.ajax({
       url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-          "hedule')/items(" + ids[i] + ")?@target='" + hostWebUrl + "'",
+          "hedule')/items(" + ids[i] + ")?$top=1000&@target='" + hostWebUrl + "'",
       method: "POST",
       contentType: "application/json;odata=verbose",
       data: JSON.stringify(data),
@@ -270,7 +270,7 @@ export function updateRecord(itemID, code, func, type, id, cat, ret, cmts, row, 
 
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+        "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),
@@ -298,7 +298,7 @@ export function updateRecord(itemID, code, func, type, id, cat, ret, cmts, row, 
 export function deleteRecord(itemID, row) {
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+        "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
     method: "POST",
     headers: {
       "X-RequestDigest": $("#__REQUESTDIGEST").val(),
@@ -313,8 +313,8 @@ export function deleteRecord(itemID, row) {
 
 export function getSizes() {
   return $.ajax({
-    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@t" +
-        "arget='" + hostWebUrl + "'",
+    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?$t" +
+        "op=1000&@target='" + hostWebUrl + "'",
     method: "GET",
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -331,7 +331,7 @@ export function updateSize(itemID, size) {
   }
 
   $.ajax({
-    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json; odata=verbose",
     data: JSON.stringify(data),
@@ -356,8 +356,8 @@ export function addSize(dept, size) {
     "Unique_x0020_Code": size
   }
   $.ajax({
-    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@t" +
-        "arget='" + hostWebUrl + "'",
+    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?$t" +
+        "op=1000&@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),
@@ -398,7 +398,7 @@ export function addRecord(dept, code, recType, recFunc, recCat, userMsg, comment
   }
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items?@target='" + hostWebUrl + "'",
+        "hedule')/items?$top=1000&@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),
@@ -434,7 +434,7 @@ export function addRecord(dept, code, recType, recFunc, recCat, userMsg, comment
 let ADMIN_LIST_NAME = 'Transfer Request Administrators'
 export function searchUserInAdminList(userName) {
   return $.ajax({
-    url: `../_api/SP.AppContextSite(@target)/web/lists/getbytitle('${ADMIN_LIST_NAME}')/items?$filter=Title eq '${userName}'&@target='${hostWebUrl}'`,
+    url: `../_api/SP.AppContextSite(@target)/web/lists/getbytitle('${ADMIN_LIST_NAME}')/items?$top=1000&$filter=Title eq '${userName}'&@target='${hostWebUrl}'`,
     method: "GET",
     headers: {
       Accept: "application/json; odata=verbose"

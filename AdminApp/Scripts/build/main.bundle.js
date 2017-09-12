@@ -9286,12 +9286,11 @@
 	            });
 	
 	            $('.viewDetailsButton').on('click', function () {
-	              $('#r-cat').empty();
-	              $('#r-func').empty();
-	              $('#r-code').empty();
-	              $('#r-type').empty();
-	              $('#r-ret').empty();
+	              // $('#r-cat').empty() $('#r-func').empty() $('#r-code').empty()
+	              // $('#r-type').empty() $('#r-ret').empty()
 	              $('#r-cat').prop('disabled', 'disabled');
+	              $('#r-func').prop('disabled', 'disabled');
+	
 	              $('#ret-table-alert').empty();
 	
 	              $('#myModal').modal('show');
@@ -10207,7 +10206,7 @@
 	
 	function getRepos() {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Repositories')/items?@t" + "arget='" + hostWebUrl + "'&$select=Repository",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Repositories')/items?$t" + "op=1000&@target='" + hostWebUrl + "'&$select=Repository",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10227,7 +10226,7 @@
 	
 	function getGeneralRetention() {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Retention Sched" + "ule')/items?@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Category",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Retention Sched" + "ule')/items?$top=1000&@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Category",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10237,7 +10236,7 @@
 	
 	function getPendingRecords() {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Status eq 'Pending'&$orderby=Department_x0020_Number",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Status eq 'Pending'&$orderby=Department_x0020_Number",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10247,7 +10246,7 @@
 	
 	function getRecordsByDept(dept) {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10257,7 +10256,7 @@
 	
 	function getRecordsByCat(cat) {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Category_x0020_ID eq '" + cat + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items$top=1000&?@target='" + hostWebUrl + "'&$filter=Record_x0020_Category_x0020_ID eq '" + cat + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10268,7 +10267,7 @@
 	function getRecordsByType(type, flag) {
 	  if (flag) {
 	    return $.ajax({
-	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Record_x0020_Type eq '" + type + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Record_x0020_Type eq '" + type + "'&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
 	      method: "GET",
 	      headers: {
 	        "Accept": "application/json; odata=verbose"
@@ -10276,7 +10275,7 @@
 	    });
 	  } else {
 	    return $.ajax({
-	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=substringof('" + type + "',Record_x0020_Type)&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=substringof('" + type + "',Record_x0020_Type)&$orderby=Department_x0020_Number,Function,Record_x0020_Type",
 	      method: "GET",
 	      headers: {
 	        "Accept": "application/json; odata=verbose"
@@ -10287,7 +10286,7 @@
 	
 	function getUserDepartments(userName) {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information'" + ")/items?@target='" + hostWebUrl + "'&$filter=Person_x0020_Responsible_x0020_f eq '" + userName + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Information'" + ")/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Person_x0020_Responsible_x0020_f eq '" + userName + "'",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10297,7 +10296,7 @@
 	
 	function getDRSCompleteness() {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness" + "')/items?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Completeness" + "')/items?$top=1000&@target='" + hostWebUrl + "'",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10307,7 +10306,7 @@
 	
 	function getCommonRecords() {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Common Records')/items?" + "@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Common Records')/items?" + "$top=1000&@target='" + hostWebUrl + "'&$select=*&$orderby=Function,Record_x0020_Type",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10318,7 +10317,7 @@
 	function getDeptRecords(dept) {
 	  if (dept == -1) {
 	    return $.ajax({
-	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?$top=1000&@target='" + hostWebUrl + "'",
 	      method: "GET",
 	      headers: {
 	        "Accept": "application/json; odata=verbose"
@@ -10326,7 +10325,7 @@
 	    });
 	  }
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?$top=1000&@target='" + hostWebUrl + "'&$filter=Department_x0020_Number eq '" + dept + "'&$orderby=Function,Record_x0020_Type",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10348,7 +10347,7 @@
 	    "New_x0020_Message": flag
 	  };
 	  $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10377,7 +10376,7 @@
 	  };
 	  for (var i = 0; i < ids.length; i++) {
 	    $.ajax({
-	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + ids[i] + ")?@target='" + hostWebUrl + "'",
+	      url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + ids[i] + ")?$top=1000&@target='" + hostWebUrl + "'",
 	      method: "POST",
 	      contentType: "application/json;odata=verbose",
 	      data: JSON.stringify(data),
@@ -10430,7 +10429,7 @@
 	  }
 	
 	  $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10457,7 +10456,7 @@
 	
 	function deleteRecord(itemID, row) {
 	  $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    headers: {
 	      "X-RequestDigest": $("#__REQUESTDIGEST").val(),
@@ -10472,7 +10471,7 @@
 	
 	function getSizes() {
 	  return $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@t" + "arget='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?$t" + "op=1000&@target='" + hostWebUrl + "'",
 	    method: "GET",
 	    headers: {
 	      "Accept": "application/json; odata=verbose"
@@ -10489,7 +10488,7 @@
 	  };
 	
 	  $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json; odata=verbose",
 	    data: JSON.stringify(data),
@@ -10514,7 +10513,7 @@
 	    "Unique_x0020_Code": size
 	  };
 	  $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@t" + "arget='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?$t" + "op=1000&@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10554,7 +10553,7 @@
 	    "New_x0020_Message": flag
 	  };
 	  $.ajax({
-	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?@target='" + hostWebUrl + "'",
+	    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" + "hedule')/items?$top=1000&@target='" + hostWebUrl + "'",
 	    method: "POST",
 	    contentType: "application/json;odata=verbose",
 	    data: JSON.stringify(data),
@@ -10588,7 +10587,7 @@
 	var ADMIN_LIST_NAME = 'Transfer Request Administrators';
 	function searchUserInAdminList(userName) {
 	  return $.ajax({
-	    url: '../_api/SP.AppContextSite(@target)/web/lists/getbytitle(\'' + ADMIN_LIST_NAME + '\')/items?$filter=Title eq \'' + userName + '\'&@target=\'' + hostWebUrl + '\'',
+	    url: '../_api/SP.AppContextSite(@target)/web/lists/getbytitle(\'' + ADMIN_LIST_NAME + '\')/items?$top=1000&$filter=Title eq \'' + userName + '\'&@target=\'' + hostWebUrl + '\'',
 	    method: "GET",
 	    headers: {
 	      Accept: "application/json; odata=verbose"
