@@ -703,7 +703,6 @@ async function populateApproveTab() {
     $('#r-exc').prop('disabled', false);
     $('#user-cmts').prop('disabled', false);
     $('#admi-cmts').prop('disabled', false);
-    console.log($('#modform')[0][1].value)
 
     $('#ret-table-alert').empty()
 
@@ -715,20 +714,12 @@ async function populateApproveTab() {
     }
     categoryList.sort();
 
-    var temp_id = $(this)
-      .closest('tr')
-      .children()[5]
-      .innerHTML
-    var temp_func = $(this)
-      .closest('tr')
-      .children()[4]
-      .innerHTML
     var funcOptions = ''
     funcOptions += '<option>Select a function</option>'
     var funcList = Object.keys(newFunctionLookup);
     funcList.sort();
     for (var i = 0; i < funcList.length; i++) {
-      if (temp_func == funcList[i]) {
+      if (tempRowData.function == funcList[i]) {
         funcOptions += '<option selected="selected">'
       } else {
         funcOptions += '<option>'
@@ -740,13 +731,13 @@ async function populateApproveTab() {
     if ($('#r-func').val() != 'Select a function' && $('#r-func').val() != '' && $('#r-func').val() != null) {
 
       var catOptions = '<option>Select a category</option>';
-      for (var i = 0; i < newFunctionLookup[temp_func].length; i++) {
-        if (newFunctionLookup[temp_func][i].substring(0, 5) == temp_id) {
+      for (var i = 0; i < newFunctionLookup[tempRowData.function].length; i++) {
+        if (newFunctionLookup[tempRowData.function][i].substring(0, 5) == tempRowData.code) {
           catOptions += '<options selected="selected">'
         } else {
           catOptions += '<option>'
         }
-        catOptions += newFunctionLookup[temp_func][i]
+        catOptions += newFunctionLookup[tempRowData.function][i]
         catOptions += '</option>'
       }
       $('#r-cat').empty()
@@ -755,7 +746,7 @@ async function populateApproveTab() {
 
     var options = ''
     for (var i = 0; i < categoryList.length; i++) {
-      if (temp_id == categoryList[i].substring(0, 5)) {
+      if (tempRowData.code == categoryList[i].substring(0, 5)) {
         options += '<option selected="selected">'
       } else {
         options += '<option>'
@@ -764,10 +755,10 @@ async function populateApproveTab() {
       options += '</option>'
     }
     $('#r-cat').append(options)
-    $('#r-dept').val($(this).closest('tr').children()[0].innerHTML)
-    $('#r-code').val($(this).closest('tr').children()[2].innerHTML)
-    $('#r-type').val($(this).closest('tr').children()[3].innerHTML)
-    $('#r-ret').val($(this).closest('tr').children()[7].innerHTML)
+    $('#r-dept').val(tempRowData.depNumber)
+    $('#r-code').val(tempRowData.code)
+    $('#r-type').val(tempRowData.recordType)
+    $('#r-ret').val(tempRowData.retentionSchedule)
 
     var temp_record
     for (var i = 0; i < recordsList.length; i++) {
@@ -781,7 +772,6 @@ async function populateApproveTab() {
     $('#user-cmts').val(temp_record['Message_x0020_To_x0020_Admin'])
     $('#admin-cmts').val(temp_record['Message_x0020_From_x0020_Admin'])
     initialCmt = $('#admin-cmts').val()
-    console.trace("trace 1");
     if ($('#r-code').val()[0] === 'U') {
 
       $('#r-func').prop('disabled', false);
