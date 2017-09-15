@@ -1,4 +1,5 @@
 import * as dao from './DataAccess.js'
+import * as getRowData from './RowData.js'
 import * as util from './Utils.js'
 
 let hostWebUrl;
@@ -545,130 +546,131 @@ async function populateApproveTab() {
       '                                </div> \
                                   <div ' +
       'class="modal-body"> \
-                                    <form class="form-hori' +
-      'zontal"> \
-                                      <div class="form-group"> \
-    ' +
-      '                                    <label class="control-label col-sm-3" for="r' +
-      '-dept">Dept: </label> \
-                                        <div class="col-' +
-      'sm-7"> \
-                                          <input type="text" class="for' +
-      'm-control" id="r-dept"> \
+                                    <form id="modform" cla' +
+      'ss="form-horizontal"> \
+                                      <div class="form-g' +
+      'roup"> \
+                                        <label class="control-label col' +
+      '-sm-3" for="r-dept">Dept: </label> \
+                                        <di' +
+      'v class="col-sm-7"> \
+                                          <input type="tex' +
+      't" class="form-control" id="r-dept"> \
+                                        <' +
+      '/div> \
+                                      </div> \
+                         ' +
+      '             <div class="form-group" style="display:none"> \
+                   ' +
+      '                     <label class="control-label col-sm-3" for="r-code">Code: </' +
+      'label> \
+                                        <div class="col-sm-7"> \
+      ' +
+      '                                    <input type="text" class="form-control" id="' +
+      'r-code" disabled> \
                                         </div> \
-     ' +
-      '                                 </div> \
-                                      ' +
-      '<div class="form-group" style="display:none"> \
-                                ' +
-      '        <label class="control-label col-sm-3" for="r-code">Code: </label> \
+           ' +
+      '                           </div> \
+                                      <div c' +
+      'lass="form-group"> \
+                                        <label class="contr' +
+      'ol-label col-sm-3" for="r-type">Record Type: </label> \
+                        ' +
+      '                <div class="col-sm-7"> \
+                                       ' +
+      '   <input type="text" class="form-control" id="r-type"> \
+                      ' +
+      '                  </div> \
+                                      </div> \
+      ' +
+      '                                <div class="form-group"> \
+                     ' +
+      '                   <label class="control-label col-sm-3" for="r-func">Function: ' +
+      '</label> \
+                                        <div class="col-sm-7"> \
+    ' +
+      '                                      <select class="form-control" id="r-func"><' +
+      '/select> \
+                                        </div> \
+                    ' +
+      '                  </div> \
+                                      <div class="for' +
+      'm-group"> \
+                                        <label class="control-label ' +
+      'col-sm-3" for="r-cat">Record Category: </label> \
+                              ' +
+      '          <div class="col-sm-7"> \
+                                          <se' +
+      'lect class="form-control" id="r-cat" disabled></select> \
+                      ' +
+      '                  </div> \
+                                      </div> \
+      ' +
+      '                                <div class="form-group"> \
+                     ' +
+      '                   <label class="control-label col-sm-3" for="r-ret">Retention: ' +
+      '</label> \
+                                        <div class="col-sm-7"> \
+    ' +
+      '                                      <textarea style="resize:none" class="form-' +
+      'control" id="r-ret" disabled></textarea> \
+                                     ' +
+      '   </div> \
+                                      </div> \
+                     ' +
+      '                 <div class="form-group"> \
+                                    ' +
+      '    <label class="control-label col-sm-3" for="r-exc">Exception: </label> \
     ' +
       '                                    <div class="col-sm-7"> \
                    ' +
-      '                       <input type="text" class="form-control" id="r-code" disab' +
-      'led> \
+      '                       <textarea style="resize:none" class="form-control" id="r-' +
+      'exc"></textarea> \
                                         </div> \
+            ' +
+      '                          </div> \
+                                      <div cl' +
+      'ass="form-group"> \
+                                        <label class="contro' +
+      'l-label col-sm-3" for="user-cmts">Msg From User: </label> \
+                    ' +
+      '                    <div class="col-sm-7"> \
+                                   ' +
+      '       <textarea style="resize:none" class="form-control" id="user-cmts" disable' +
+      'd></textarea> \
+                                        </div> \
+               ' +
+      '                       </div> \
+                                      <div class' +
+      '="form-group"> \
+                                        <label class="control-l' +
+      'abel col-sm-3" for="admin-cmts">Msg To User: </label> \
                         ' +
-      '              </div> \
-                                      <div class="form-gr' +
-      'oup"> \
-                                        <label class="control-label col-' +
-      'sm-3" for="r-type">Record Type: </label> \
-                                     ' +
-      '   <div class="col-sm-7"> \
-                                          <input typ' +
-      'e="text" class="form-control" id="r-type"> \
-                                   ' +
-      '     </div> \
-                                      </div> \
-                   ' +
-      '                   <div class="form-group"> \
-                                  ' +
-      '      <label class="control-label col-sm-3" for="r-func">Function: </label> \
-  ' +
-      '                                      <div class="col-sm-7"> \
-                 ' +
-      '                         <select class="form-control" id="r-func"></select> \
-  ' +
-      '                                      </div> \
-                                 ' +
-      '     </div> \
-                                      <div class="form-group"> \
- ' +
-      '                                       <label class="control-label col-sm-3" for' +
-      '="r-cat">Record Category: </label> \
-                                        <di' +
-      'v class="col-sm-7"> \
-                                          <select class="f' +
-      'orm-control" id="r-cat" disabled></select> \
-                                   ' +
-      '     </div> \
-                                      </div> \
-                   ' +
-      '                   <div class="form-group"> \
-                                  ' +
-      '      <label class="control-label col-sm-3" for="r-ret">Retention: </label> \
-  ' +
-      '                                      <div class="col-sm-7"> \
-                 ' +
-      '                         <textarea style="resize:none" class="form-control" id="' +
-      'r-ret" disabled></textarea> \
-                                        </div> \
- ' +
-      '                                     </div> \
-                                  ' +
-      '    <div class="form-group"> \
-                                        <label cl' +
-      'ass="control-label col-sm-3" for="r-exc">Exception: </label> \
-                 ' +
-      '                       <div class="col-sm-7"> \
-                                ' +
-      '          <textarea style="resize:none" class="form-control" id="r-exc"></textar' +
-      'ea> \
-                                        </div> \
-                         ' +
-      '             </div> \
-                                      <div class="form-gro' +
-      'up"> \
-                                        <label class="control-label col-s' +
-      'm-3" for="user-cmts">Msg From User: </label> \
-                                 ' +
-      '       <div class="col-sm-7"> \
-                                          <texta' +
-      'rea style="resize:none" class="form-control" id="user-cmts" disabled></textarea>' +
-      ' \
-                                        </div> \
-                            ' +
-      '          </div> \
-                                      <div class="form-group"' +
+      '                <div class="col-sm-7"> \
+                                       ' +
+      '   <textarea style="resize:none" class="form-control" id="admin-cmts"></textarea' +
       '> \
-                                        <label class="control-label col-sm-3' +
-      '" for="admin-cmts">Msg To User: </label> \
-                                     ' +
-      '   <div class="col-sm-7"> \
-                                          <textarea ' +
-      'style="resize:none" class="form-control" id="admin-cmts"></textarea> \
-         ' +
-      '                               </div> \
-                                      </' +
-      'div> \
-                                    </form> \
+                                        </div> \
                            ' +
-      '       </div> \
-                                  <div class="modal-footer"> \
- ' +
-      '                                   <button type="button" class="btn btn-default"' +
-      ' id="saveRecord">Save</button> \
-                                    <button typ' +
-      'e="button" class="btn btn-default" data-dismiss="modal">Close</button> \
-       ' +
-      '                           </div> \
-                                </div> \
-   ' +
-      '                           </div> \
-                            </div>')
-
+      '           </div> \
+                                    </form> \
+              ' +
+      '                    </div> \
+                                  <div class="modal' +
+      '-footer"> \
+                                    <button type="button" class="btn' +
+      ' btn-default" id="saveRecord">Save</button> \
+                                  ' +
+      '  <button type="button" class="btn btn-default" data-dismiss="modal">Close</butt' +
+      'on> \
+                                  </div> \
+                               ' +
+      ' </div> \
+                              </div> \
+                            </d' +
+      'iv>');
   $('#r-cat').on('change', function () {
+
     var newCatID = $(this)
       .val()
       .substring(0, 5)
@@ -684,10 +686,20 @@ async function populateApproveTab() {
   })
 
   $('.viewDetailsButton').on('click', function () {
-    // $('#r-cat').empty() $('#r-func').empty() $('#r-code').empty()
-    // $('#r-type').empty() $('#r-ret').empty()
-    $('#r-cat').prop('disabled', 'disabled');
-    $('#r-func').prop('disabled', 'disabled');
+    var tempRowDataArg = $(this)
+      .parent()
+      .parent()[0]
+      .cells;
+    var tempRowData = getRowData.getRowData(tempRowDataArg);
+
+    $('#r-func').prop('disabled', true);
+    $('#r-cat').prop('disabled', true);
+    $('#r-type').prop('disabled', false);
+    $('#r-ret').prop('disabled', true);
+    $('#r-exc').prop('disabled', false);
+    $('#user-cmts').prop('disabled', false);
+    $('#admi-cmts').prop('disabled', false);
+    console.log($('#modform')[0][1].value)
 
     $('#ret-table-alert').empty()
 
@@ -698,6 +710,7 @@ async function populateApproveTab() {
       categoryList.push(genRetention[i]['Record_x0020_Category_x0020_ID'] + ' - ' + genRetention[i]['Record_x0020_Category'])
     }
     categoryList.sort();
+
     var temp_id = $(this)
       .closest('tr')
       .children()[5]
@@ -707,7 +720,7 @@ async function populateApproveTab() {
       .children()[4]
       .innerHTML
     var funcOptions = ''
-    funcOptions += '<option disabled selected="selected">Select a function</option>'
+    funcOptions += '<option>Select a function</option>'
     var funcList = Object.keys(newFunctionLookup);
     funcList.sort();
     for (var i = 0; i < funcList.length; i++) {
@@ -721,8 +734,8 @@ async function populateApproveTab() {
     }
     $('#r-func').append(funcOptions);
     if ($('#r-func').val() != 'Select a function' && $('#r-func').val() != '' && $('#r-func').val() != null) {
-      $('#r-cat').prop('disabled', false);
-      var catOptions = '<option selected="selected" disabled>Select a category</option>';
+
+      var catOptions = '<option>Select a category</option>';
       for (var i = 0; i < newFunctionLookup[temp_func].length; i++) {
         if (newFunctionLookup[temp_func][i].substring(0, 5) == temp_id) {
           catOptions += '<options selected="selected">'
@@ -758,13 +771,20 @@ async function populateApproveTab() {
       if (temp_record['Department_x0020_Number'] == $('#r-dept').val() && temp_record['Code'] == $('#r-code').val()) {
         break
       }
+
     }
     $('#r-exc').val(temp_record['Retention_x0020_Exception'])
     $('#user-cmts').val(temp_record['Message_x0020_To_x0020_Admin'])
     $('#admin-cmts').val(temp_record['Message_x0020_From_x0020_Admin'])
     initialCmt = $('#admin-cmts').val()
-  })
+    console.trace("trace 1");
+    if ($('#r-code').val()[0] === 'U') {
 
+      $('#r-func').prop('disabled', false);
+      $('#r-cat').prop('disabled', false);
+      $('#r-type').prop('disabled', false);
+    }
+  });
   $('#r-func').change(function () {
     if ($('#r-func').val() == '') {
       $('#r-cat').empty()
@@ -782,7 +802,6 @@ async function populateApproveTab() {
     $('#r-cat').empty()
     $('#r-cat').append(catOptions)
   })
-
   $('#saveRecord').on('click', function () {
     dept_code = row.children()[0].innerHTML + row.children()[2].innerHTML
     var itemID = itemIDLookup[dept_code]
@@ -813,9 +832,10 @@ async function populateApproveTab() {
     }
     update(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, flag)
     $('#myModal').modal('hide');
-    $('#approve-alert').html('</br><div class="alert alert-info" role="alert">Processing...</div>')
-  })
 
+    $('#approve-alert').html('</br><div class="alert alert-info" role="alert">Processing...</div>')
+
+  })
   $('#approveButton').click(function () {
     var rowList = []
     var ids = []
