@@ -9287,9 +9287,13 @@
 	            });
 	
 	            $('.viewDetailsButton').on('click', function () {
+	              //this is to prevent state issues when getting the data
 	              var tempRowDataArg = $(this).parent().parent()[0].cells;
+	              //this function returns an object with all of the record data
 	              var tempRowData = getRowData.getRowData(tempRowDataArg);
 	
+	              //log the returned object
+	              console.table(tempRowData);
 	              $('#r-func').prop('disabled', true);
 	              $('#r-cat').prop('disabled', true);
 	              $('#r-type').prop('disabled', false);
@@ -10628,8 +10632,8 @@
 	   var d = [];
 	
 	   while (i < 8) {
-	      d.push(src[ii].innerHTML);
-	      ii++;
+	      d.push(src[i].innerHTML);
+	      i++;
 	   }
 	   return d = {
 	      'depNumber': d[0],

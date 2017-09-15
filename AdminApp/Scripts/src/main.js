@@ -1,4 +1,5 @@
 ﻿import * as indexPage from './IndexPage.js'
+
 import {getQueryStringParameter} from './Utils.js'
 
 ExecuteOrDelayUntilScriptLoaded(init, "sp.js");
