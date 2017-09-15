@@ -22,7 +22,7 @@
     "webpack": "webpack",
     "webpack:watch": "webpack --watch",
     "deploy": "deploy-to-git",
-    "build-my-app": "a-build-script"
+    "build-my-app": ""
   },
   "config": {
     "deployToGit": {
