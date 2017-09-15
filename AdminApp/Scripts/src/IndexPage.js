@@ -1,5 +1,5 @@
+import * as CurrentRow from './RowData.js'
 import * as dao from './DataAccess.js'
-import * as getRowData from './RowData.js'
 import * as util from './Utils.js'
 
 let hostWebUrl;
@@ -687,12 +687,12 @@ async function populateApproveTab() {
 
   $('.viewDetailsButton').on('click', function () {
     //this is to prevent state issues when getting the data
-    var tempRowDataArg = $(this)
+    var thisRow = $(this)
       .parent()
       .parent()[0]
       .cells;
     //this function returns an object with all of the record data
-    var tempRowData = getRowData.getRowData(tempRowDataArg);
+    var tempRowData = CurrentRow.getRowData(thisRow);
 
     //log the returned object
     console.table(tempRowData);
