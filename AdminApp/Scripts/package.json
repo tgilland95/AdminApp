@@ -5,7 +5,9 @@
   "main": "main.js",
   "dependencies": {
     "babel-polyfill": "^6.9.1",
-    "babel-runtime": "^6.9.2"
+    "babel-runtime": "^6.9.2",
+    "post-compile-webpack-plugin": "^0.1.1",
+    "simple-git": "^1.77.0"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
@@ -15,27 +17,13 @@
     "babel-plugin-transform-runtime": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "deploy-to-git": "^0.1.5",
+    "on-build-webpack": "^0.1.0",
     "webpack": "^1.13.1"
   },
   "scripts": {
     "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
     "webpack": "webpack",
-    "webpack:watch": "webpack --watch",
-    "deploy": "deploy-to-git",
-    "build-my-app": ""
-  },
-  "config": {
-    "deployToGit": {
-      "repository": "https://github.com/tgilland95/spDevCdn",
-      "branch": "master",
-      "folder": "./build",
-      "script": "npm run build-my-app",
-      "commit": "Automatic commit text",
-      "user": {
-        "email": "tylergilland@gmail.com",
-        "name": "Tyler Gilland"
-      }
-    }
+    "webpack:watch": "webpack --watch"
   },
   "author": "",
   "license": ""

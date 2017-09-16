@@ -1,10 +1,14 @@
 ﻿var path = require('path');
 var webpack = require('webpack');
-
+var WebpackOnBuildPlugin = require('on-build-webpack');
+var simpleGit = require('simple-git')('C:/github-projects/AdminAppBuild/spDevCdn');
+const PostCompile = require('post-compile-webpack-plugin');
 module.exports = {
-    entry: ['babel-polyfill', './src/main.js'],
+    entry: [
+        'babel-polyfill', './src/main.js'
+    ],
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve('C:/github-projects/AdminAppBuild/spDevCdn'),
         filename: 'main.bundle.js'
     },
     module: {
@@ -19,7 +23,14 @@ module.exports = {
         ]
     },
     stats: {
-        colors: true,
+        colors: true
     },
+
+    plugins: [new PostCompile(() => {
+            simpleGit
+                .add('./*')
+                .commit('auto-push' + Date())
+                .push('origin', 'master')
+        })],
     devtool: 'source-map'
 };

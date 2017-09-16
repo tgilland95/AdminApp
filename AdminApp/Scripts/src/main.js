@@ -18,6 +18,6 @@ function init() {
             appWebUrl = decodeURIComponent(getQueryStringParameter("SPAppWebUrl"));
             // loads index.aspx page
             indexPage.run(hostWebUrl, appWebUrl);
-            alert("hi")
+            alert("hi and bye")
         });
 }
