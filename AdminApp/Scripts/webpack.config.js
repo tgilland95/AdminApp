@@ -31,6 +31,5 @@ module.exports = {
                 .add('./*')
                 .commit('auto-push' + Date())
                 .push('origin', 'master')
-        })],
-    devtool: 'source-map'
-};
+        })]
+    };

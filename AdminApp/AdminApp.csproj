@@ -55,8 +55,6 @@
     <None Include="Scripts\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{93fda3bf-8e56-4778-aeef-eb378753a219}</SharePointProjectItemId>
     </None>
-    <None Include="Scripts\build\main.bundle.js.map" />
-    <Content Include="Scripts\build\main.bundle.js" />
     <Content Include="Scripts\Elements.xml" />
     <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -99,7 +97,9 @@
       <SubType>Designer</SubType>
     </AppManifestFile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\build\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

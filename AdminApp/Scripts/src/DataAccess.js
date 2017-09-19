@@ -169,7 +169,7 @@ export function getDeptRecords(dept) {
   })
 }
 
-export function updatePendingRecord(row, itemID, dept, func, recType, catID, cat, ret, exc, adminCmts, flag) {
+export function updatePendingRecord(row, itemID, dept, func, recType, catID, cat, ret, exc, adminCmts, userCmts, flag) {
   var data = {
     "__metadata": {
       "type": "SP.Data.Department_x0020_Retention_x0020_ScheduleListItem"
@@ -180,11 +180,13 @@ export function updatePendingRecord(row, itemID, dept, func, recType, catID, cat
     "Record_x0020_Category_x0020_ID": catID,
     "Retention_x0020_Exception": exc,
     "Message_x0020_From_x0020_Admin": adminCmts,
+    "Message_x0020_To_x0020_Admin": userCmts ,
     "New_x0020_Message": flag
+    
   }
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
+        "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),
@@ -215,7 +217,7 @@ export function approveRecords(rows, ids) {
   for (var i = 0; i < ids.length; i++) {
     $.ajax({
       url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-          "hedule')/items(" + ids[i] + ")?$top=1000&@target='" + hostWebUrl + "'",
+          "hedule')/items(" + ids[i] + ")?@target='" + hostWebUrl + "'",
       method: "POST",
       contentType: "application/json;odata=verbose",
       data: JSON.stringify(data),
@@ -270,7 +272,7 @@ export function updateRecord(itemID, code, func, type, id, cat, ret, cmts, row, 
 
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
+        "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),
@@ -298,7 +300,7 @@ export function updateRecord(itemID, code, func, type, id, cat, ret, cmts, row, 
 export function deleteRecord(itemID, row) {
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
+        "hedule')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
     method: "POST",
     headers: {
       "X-RequestDigest": $("#__REQUESTDIGEST").val(),
@@ -331,7 +333,7 @@ export function updateSize(itemID, size) {
   }
 
   $.ajax({
-    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?$top=1000&@target='" + hostWebUrl + "'",
+    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items(" + itemID + ")?@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json; odata=verbose",
     data: JSON.stringify(data),
@@ -356,8 +358,7 @@ export function addSize(dept, size) {
     "Unique_x0020_Code": size
   }
   $.ajax({
-    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?$t" +
-        "op=1000&@target='" + hostWebUrl + "'",
+    url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Unique Codes')/items?@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),
@@ -371,7 +372,7 @@ export function addSize(dept, size) {
   })
 }
 
-export function addRecord(dept, code, recType, recFunc, recCat, userMsg, commentsPlan, archival, vital, highlyConfidential, recRepo) {
+export function addRecord(dept, code, recType, recFunc, recCat,   Msg, commentsPlan, archival, vital, highlyConfidential, recRepo) {
   var flag
   if (userMsg != '') {
     flag = 'Yes'
@@ -398,7 +399,7 @@ export function addRecord(dept, code, recType, recFunc, recCat, userMsg, comment
   }
   $.ajax({
     url: "../_api/SP.AppContextSite(@target)/web/lists/getbytitle('Department Retention Sc" +
-        "hedule')/items?$top=1000&@target='" + hostWebUrl + "'",
+        "hedule')/items?@target='" + hostWebUrl + "'",
     method: "POST",
     contentType: "application/json;odata=verbose",
     data: JSON.stringify(data),

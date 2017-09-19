@@ -6,8 +6,6 @@
     <ProjectItemFile Source="jquery-1.9.1.min.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="jquery-1.9.1.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="jquery-1.9.1.intellisense.js" Target="Scripts\" Type="ElementFile" />
-    <ProjectItemFile Source="build\main.bundle.js.map" Target="Scripts\build\" Type="ElementFile" />
-    <ProjectItemFile Source="build\main.bundle.js" Target="Scripts\build\" Type="ElementFile" />
     <ProjectItemFile Source="src\main.js" Target="Scripts\src\" Type="ElementFile" />
   </Files>
 </ProjectItem>

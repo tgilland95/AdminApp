@@ -125,8 +125,8 @@ export async function approveRecords(rows, ids) {
   await dao.approveRecords(rows, ids)
 }
 
-export async function updatePendingRecord(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, flag,) {
-  await dao.updatePendingRecord(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, flag,)
+export async function updatePendingRecord(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, newUserCmts, flag) {
+  await dao.updatePendingRecord(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, newUserCmts, flag,)
 }
 
 export async function updateComment(itemID, comment, row) {

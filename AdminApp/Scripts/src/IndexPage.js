@@ -17,6 +17,7 @@ let repos
 let depts
 let initialCmt
 let adminStatus
+let tempRowData
 export async function run(hWebUrl, aWebUrl) {
   // initializes DataAccess object with hostweb and appweb URLs
   dao.init(hWebUrl, aWebUrl);
@@ -687,12 +688,9 @@ async function populateApproveTab() {
 
   $('.viewDetailsButton').on('click', function () {
     //this is to prevent state issues when getting the data
-    var thisRow = $(this)
-      .parent()
-      .parent()[0]
-      .cells;
+    var thisRow = $(this).parent().parent()[0].cells;
     //this function returns an object with all of the record data
-    var tempRowData = CurrentRow.getRowData(thisRow);
+     tempRowData = CurrentRow.getRowData(thisRow);
 
     //log the returned object
     console.table(tempRowData);
@@ -702,7 +700,7 @@ async function populateApproveTab() {
     $('#r-ret').prop('disabled', true);
     $('#r-exc').prop('disabled', false);
     $('#user-cmts').prop('disabled', false);
-    $('#admi-cmts').prop('disabled', false);
+    $('#admin-cmts').prop('disabled', false);
 
     $('#ret-table-alert').empty()
 
@@ -727,23 +725,9 @@ async function populateApproveTab() {
       funcOptions += funcList[i]
       funcOptions += '</option>'
     }
+    $('#r-func').empty();
+    $('#r-func').val('');
     $('#r-func').append(funcOptions);
-    if ($('#r-func').val() != 'Select a function' && $('#r-func').val() != '' && $('#r-func').val() != null) {
-
-      var catOptions = '<option>Select a category</option>';
-      for (var i = 0; i < newFunctionLookup[tempRowData.function].length; i++) {
-        if (newFunctionLookup[tempRowData.function][i].substring(0, 5) == tempRowData.code) {
-          catOptions += '<options selected="selected">'
-        } else {
-          catOptions += '<option>'
-        }
-        catOptions += newFunctionLookup[tempRowData.function][i]
-        catOptions += '</option>'
-      }
-      $('#r-cat').empty()
-      $('#r-cat').append(catOptions);
-    }
-
     var options = ''
     for (var i = 0; i < categoryList.length; i++) {
       if (tempRowData.code == categoryList[i].substring(0, 5)) {
@@ -754,7 +738,6 @@ async function populateApproveTab() {
       options += categoryList[i]
       options += '</option>'
     }
-    $('#r-cat').append(options)
     $('#r-dept').val(tempRowData.depNumber)
     $('#r-code').val(tempRowData.code)
     $('#r-type').val(tempRowData.recordType)
@@ -768,14 +751,13 @@ async function populateApproveTab() {
       }
 
     }
-    $('#r-exc').val(temp_record['Retention_x0020_Exception'])
-    $('#user-cmts').val(temp_record['Message_x0020_To_x0020_Admin'])
-    $('#admin-cmts').val(temp_record['Message_x0020_From_x0020_Admin'])
+     $('#r-exc').val(tempRowData.exception)
+     $('#user-cmts').val(tempRowData.messageFromUser)
+     $('#admin-cmts').val(tempRowData.messageToUser)
     initialCmt = $('#admin-cmts').val()
     if ($('#r-code').val()[0] === 'U') {
-
       $('#r-func').prop('disabled', false);
-      $('#r-cat').prop('disabled', false);
+      $('#r-cat').prop('disabled', true);
       $('#r-type').prop('disabled', false);
     }
   });
@@ -783,11 +765,12 @@ async function populateApproveTab() {
     if ($('#r-func').val() == '') {
       $('#r-cat').empty()
       $('#r-cat').prop('disabled', true)
-      $('#r-cat').val('')
+     $('#r-cat').val('')
       return
     }
     $('#r-cat').prop('disabled', false)
     var catOptions = '<option selected="selected" disabled>Select a category</option><option></option>'
+    
     for (var i = 0; i < newFunctionLookup[$('#r-func').val()].length; i++) {
       catOptions += '<option>'
       catOptions += newFunctionLookup[$('#r-func').val()][i]
@@ -797,23 +780,25 @@ async function populateApproveTab() {
     $('#r-cat').append(catOptions)
   })
   $('#saveRecord').on('click', function () {
-    dept_code = row.children()[0].innerHTML + row.children()[2].innerHTML
+    
+    dept_code = tempRowData.depNumber +tempRowData.code;
+    //test
     var itemID = itemIDLookup[dept_code]
     var newDept = $('#r-dept').val()
     var newFunc = $('#r-func').val()
     var newType = $('#r-type').val()
-    var newCatID = $('#r-cat')
-      .val()
-      .substring(0, 5)
-    var newCat = $('#r-cat')
-      .val()
-      .substring(8)
+    var newCatID;
+    var newCat;
+    if( $('#r-cat').val()!==null){ 
+    newCatID = $('#r-cat').val().substring(0, 5)
+    newCat = $('#r-cat').val().substring(8)
+    }
     var newRet = $('#r-ret').val()
     var newExc = $('#r-exc').val()
     var newAdminCmts = $('#admin-cmts').val()
-
+    var newUserCmts = $('#user-cmts').val()
     var flag
-    if (newAdminCmts == initialCmt) {
+    if (newAdminCmts === initialCmt || newAdminCmts === '') {
       flag = 'No'
     } else {
       flag = 'Yes'
@@ -824,7 +809,7 @@ async function populateApproveTab() {
       delete itemIDLookup[dept_code]
       itemIDLookup[new_dept_code] = itemID
     }
-    update(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, flag)
+    update(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, newUserCmts, flag)
     $('#myModal').modal('hide');
 
     $('#approve-alert').html('</br><div class="alert alert-info" role="alert">Processing...</div>')
@@ -1111,8 +1096,8 @@ async function approveRecords(rows, ids) {
   await util.approveRecords(rows, ids)
 }
 
-async function update(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, flag) {
-  await util.updatePendingRecord(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, flag)
+async function update(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts,newUserCmts, flag) {
+  await util.updatePendingRecord(row, itemID, newDept, newFunc, newType, newCatID, newCat, newRet, newExc, newAdminCmts, newUserCmts, flag)
 }
 
 async function getRepos() {

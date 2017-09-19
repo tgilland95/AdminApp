@@ -5,8 +5,6 @@
     <File Path="Scripts\jquery-1.9.1.min.js" Url="Scripts/jquery-1.9.1.min.js" ReplaceContent="TRUE" />
     <File Path="Scripts\jquery-1.9.1.js" Url="Scripts/jquery-1.9.1.js" ReplaceContent="TRUE" />
     <File Path="Scripts\jquery-1.9.1.intellisense.js" Url="Scripts/jquery-1.9.1.intellisense.js" ReplaceContent="TRUE" />
-    <File Path="Scripts\build\main.bundle.js.map" Url="Scripts/build/main.bundle.js.map" ReplaceContent="TRUE" />
-    <File Path="Scripts\build\main.bundle.js" Url="Scripts/build/main.bundle.js" ReplaceContent="TRUE" />
     <File Path="Scripts\src\main.js" Url="Scripts/src/main.js" ReplaceContent="TRUE" />
   </Module>
 </Elements>
